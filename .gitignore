@@ -41,4 +41,3 @@ htmlcov/
 
 # uv
 .uv/
-uv.lock
