@@ -21,22 +21,25 @@ curl -X POST http://localhost:8000/v1/rewrite \
 # Install uv
 pip install uv
 
-# Install workspace
-uv pip install -e packages/llm-adapters -e packages/cache-adapters -e "services/rewriteforge-api[dev]"
+# Create venv and install
+uv venv
+uv sync --group dev
 
 # Run
-uvicorn rewriteforge.bootstrap:app --reload
+uv run uvicorn rewriteforge.bootstrap:app --reload
 
 # Test
-pytest
+uv run pytest
 
 # E2E test (requires running container)
 ./scripts/e2e.sh
 
 # Lint
-ruff check .
-ruff format .
+uv run ruff check .
+uv run ruff format .
 ```
+
+**VS Code:** Select interpreter `.venv/bin/python` for Pylance to resolve imports.
 
 ## Configuration
 
