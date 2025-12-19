@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - LLM_PROVIDER=mock
+      - CACHE_BACKEND=memory
+    # For Redis:
+    # - CACHE_BACKEND=redis
+    # - CACHE_REDIS_URL=redis://redis:6379
+    # depends_on:
+    #   - redis
+
+  # redis:
+  #   image: redis:alpine
+  #   ports:
+  #     - "6379:6379"
