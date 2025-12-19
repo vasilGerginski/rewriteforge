@@ -5,9 +5,11 @@ Text rewriting service with pluggable LLM and cache adapters.
 ## Quick Start
 
 ```bash
-# Clone and run
-docker build -t rewriteforge .
-docker run -p 8000:8000 --env-file .env rewriteforge
+# Pull and run
+docker run -p 8000:8000 ghcr.io/vasilgerginski/rewriteforge:latest
+
+# Or with custom config
+docker run -p 8000:8000 --env-file .env ghcr.io/vasilgerginski/rewriteforge:latest
 
 # Test
 curl -X POST http://localhost:8000/v1/rewrite \
