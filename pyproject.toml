@@ -2,6 +2,13 @@
 name = "rewriteforge-workspace"
 version = "0.1.0"
 requires-python = ">=3.12"
+dependencies = ["rewriteforge-api"]
+
+[dependency-groups]
+dev = ["pytest", "pytest-asyncio", "httpx", "ruff"]
+
+[tool.uv.sources]
+rewriteforge-api = { workspace = true }
 
 [tool.uv.workspace]
 members = ["packages/*", "services/*"]

@@ -10,18 +10,14 @@ def app():
 
 @pytest.fixture
 async def client(app):
-    async with AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
-    ) as client:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         yield client
 
 
 class TestRewriteEndpoint:
     async def test_rewrite_full_flow(self, client):
         """Integration test: full request -> response cycle"""
-        response = await client.post(
-            "/v1/rewrite", json={"text": "Hello world", "style": "pirate"}
-        )
+        response = await client.post("/v1/rewrite", json={"text": "Hello world", "style": "pirate"})
 
         assert response.status_code == 200
         data = response.json()
@@ -47,9 +43,7 @@ class TestRewriteEndpoint:
 
     async def test_rewrite_text_too_long(self, client):
         """Test 422 for text exceeding limit"""
-        response = await client.post(
-            "/v1/rewrite", json={"text": "x" * 6000, "style": "pirate"}
-        )
+        response = await client.post("/v1/rewrite", json={"text": "x" * 6000, "style": "pirate"})
 
         assert response.status_code == 422
 
@@ -69,16 +63,12 @@ class TestRewriteEndpoint:
     async def test_rewrite_caching(self, client):
         """Test that second request returns cached result"""
         # First request
-        response1 = await client.post(
-            "/v1/rewrite", json={"text": "Cache test", "style": "formal"}
-        )
+        response1 = await client.post("/v1/rewrite", json={"text": "Cache test", "style": "formal"})
         assert response1.status_code == 200
         assert response1.json()["cached"] is False
 
         # Second request with same input
-        response2 = await client.post(
-            "/v1/rewrite", json={"text": "Cache test", "style": "formal"}
-        )
+        response2 = await client.post("/v1/rewrite", json={"text": "Cache test", "style": "formal"})
         assert response2.status_code == 200
         assert response2.json()["cached"] is True
 
