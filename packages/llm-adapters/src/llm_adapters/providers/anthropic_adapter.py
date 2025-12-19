@@ -1,4 +1,5 @@
 from anthropic import AsyncAnthropic
+from anthropic.types import TextBlock
 
 from llm_adapters.contracts import LLMInterface
 
@@ -6,7 +7,7 @@ from llm_adapters.contracts import LLMInterface
 class AnthropicAdapter(LLMInterface):
     name = "anthropic"  # Auto-registered!
 
-    def __init__(self, api_key: str, model: str = "claude-sonnet-4-20250514", **kwargs):
+    def __init__(self, api_key: str, model: str = "claude-sonnet-4-20250514", **_kwargs):
         self._client = AsyncAnthropic(api_key=api_key)
         self._model = model
 
@@ -22,7 +23,10 @@ class AnthropicAdapter(LLMInterface):
                 }
             ],
         )
-        return response.content[0].text
+        block = response.content[0]
+        if isinstance(block, TextBlock):
+            return block.text
+        return ""
 
     async def rewrite_stream(self, text: str, style: str):
         async with self._client.messages.stream(

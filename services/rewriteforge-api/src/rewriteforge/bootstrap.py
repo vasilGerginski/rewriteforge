@@ -21,7 +21,7 @@ def create_app() -> FastAPI:
     )
 
     # Store container reference
-    app.container = container
+    app.state.container = container
 
     # Wire container to modules (enables @inject decorator)
     container.wire(

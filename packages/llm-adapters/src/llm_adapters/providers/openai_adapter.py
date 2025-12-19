@@ -21,7 +21,7 @@ class OpenAIAdapter(LLMInterface):
                 }
             ],
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content or ""
 
     async def rewrite_stream(self, text: str, style: str):
         stream = await self._client.chat.completions.create(

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import AsyncGenerator
+from collections.abc import AsyncIterator
 
 
 class LLMInterface(ABC):
@@ -63,11 +63,11 @@ class LLMInterface(ABC):
         pass
 
     @abstractmethod
-    async def rewrite_stream(self, text: str, style: str) -> AsyncGenerator[str, None]:
+    def rewrite_stream(self, text: str, style: str) -> AsyncIterator[str]:
         """
         Rewrite text with streaming response.
 
         Yields:
             Text chunks as they arrive
         """
-        pass
+        ...
