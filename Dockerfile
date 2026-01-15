@@ -1,5 +1,5 @@
 # Dockerfile
-FROM python:3.15-rc-alpine3.22 AS builder
+FROM python:3.15-rc-alpine3.23 AS builder
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY services/ services/
 RUN uv pip install --system -e packages/llm-adapters -e packages/cache-adapters -e services/rewriteforge-api
 
 # Production stage
-FROM python:3.15-rc-alpine3.22
+FROM python:3.15-rc-alpine3.23
 
 WORKDIR /app
 
